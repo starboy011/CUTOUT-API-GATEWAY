@@ -14,7 +14,7 @@ func main() {
 	http.HandleFunc("/", helloHandler)
 
 	fmt.Println("Starting server on :4040")
-	if err := http.ListenAndServe(":4040", nil); err != nil {
+	if err := http.ListenAndServe(": 4040", nil); err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 	}
 }
