@@ -11,7 +11,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Create .env file
-        run: echo "PORT=8080" >> .env
+        run: echo "PORT=4040" >> .env
       - name: Login to Docker
         run: docker login -u starboy011 -p Pranav123@
       - name: Build Docker Image
@@ -27,4 +27,4 @@ jobs:
       - name: Delete the container
         run: docker rm -f cutouts-container
       - name: run Docker Container
-        run: docker run -d -p 8080:8080 --name cutouts-container starboy011/cutout
+        run: docker run -d -p 4040:4040 --name cutouts-container starboy011/cutout
