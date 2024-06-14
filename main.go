@@ -3,15 +3,13 @@ package main
 import (
 	"fmt"
 	"net/http"
-)
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World!")
-}
+	"github.com/starboy011/CUTOUT-API-GATEWAY/internal/handler"
+)
 
 func main() {
 
-	http.HandleFunc("/", helloHandler)
+	http.HandleFunc("/hello", handler.HelloHandler)
 
 	fmt.Println("Starting server on :8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
