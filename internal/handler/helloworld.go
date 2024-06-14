@@ -17,7 +17,6 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	sslMode := os.Getenv("DB_SSLMODE")
-
 	// Check if any environment variables are missing
 	if dbUser == "" || dbPassword == "" || dbName == "" || dbHost == "" || dbPort == "" || sslMode == "" {
 		http.Error(w, "Missing required environment variables", http.StatusInternalServerError)
