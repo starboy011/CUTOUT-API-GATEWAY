@@ -4,13 +4,28 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 
 	_ "github.com/lib/pq"
 )
 
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
+	// Retrieve database connection details from environment variables
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	sslMode := os.Getenv("DB_SSLMODE")
+	fmt.Print("Rishav", dbUser, dbPassword, dbName, dbHost, dbPort, sslMode)
+	// Check if any environment variables are missing
+	if dbUser == "" || dbPassword == "" || dbName == "" || dbHost == "" || dbPort == "" || sslMode == "" {
+		http.Error(w, "Missing required environment variables", http.StatusInternalServerError)
+		return
+	}
+
 	// PostgreSQL connection string
-	connStr := "postgres://postgres:Smmarp31461013@localhost/BarberShopsUser?sslmode=disable"
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", dbUser, dbPassword, dbHost, dbPort, dbName, sslMode)
 
 	// Connect to PostgreSQL
 	db, err := sql.Open("postgres", connStr)
