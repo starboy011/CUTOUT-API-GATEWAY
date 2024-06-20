@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/starboy011/api-gateway/server"
 )
@@ -19,14 +20,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Create a handler function that includes New Relic instrumentation
+	// Create a mux router
+	router := mux.NewRouter()
+
+	// Setup your routes
+	server.SetupBarberShopsServiceRoutes(router)
+
+	// Instrument the handler with New Relic
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		txn := app.StartTransaction(req.URL.Path)
 		defer txn.End()
 
-		// Your endpoint logic here
-		server.StartServer()
-
+		// Route requests through the mux router
+		router.ServeHTTP(w, req)
 	})
 
 	// Start your HTTP server
