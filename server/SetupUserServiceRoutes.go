@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gorilla/mux"
-	handlers "github.com/starboy011/api-gateway/internal/handler"
+	handlers "github.com/starboy011/api-gateway/internal/handler/user_service_handler"
 )
 
 func SetupUserServiceRoutes(router *mux.Router) {
