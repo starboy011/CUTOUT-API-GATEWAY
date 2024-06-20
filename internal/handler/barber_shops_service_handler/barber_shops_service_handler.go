@@ -16,7 +16,6 @@ type ShopResponse struct {
 
 // HandleShopsRequest handles requests for /barber-shop-service/shops endpoint
 func HandleShopsRequest(w http.ResponseWriter, r *http.Request) {
-	// Define the URL of the backend service
 	backendURL := "http://localhost:8081/shops"
 
 	// Create a new GET request to the backend service
@@ -56,4 +55,5 @@ func HandleShopsRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(responseData)
+
 }

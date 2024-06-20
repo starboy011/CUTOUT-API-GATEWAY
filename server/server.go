@@ -1,7 +1,6 @@
 package server
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -17,9 +16,6 @@ func StartServer() error {
 	// Setup nested routes for shops
 	SetupBarberShopsServiceRoutes(router)
 	SetupUserServiceRoutes(router)
-
-	// Start HTTP server
-	log.Println("Starting API Gateway...")
 	if err := http.ListenAndServe(":8080", router); err != nil {
 		return err
 	}
