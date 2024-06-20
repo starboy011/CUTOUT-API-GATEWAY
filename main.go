@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"log"
+
+	"github.com/starboy011/api-gateway/server"
 )
 
 func main() {
 
 	fmt.Println("Starting server on :8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		fmt.Printf("Error starting server: %s\n", err)
+	if err := server.StartServer(); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
 	}
 }
