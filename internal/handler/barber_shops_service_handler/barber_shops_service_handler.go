@@ -1,18 +1,10 @@
 package handlers
 
 import (
-	"encoding/json"
+	"io"
 	"log"
 	"net/http"
 )
-
-// ShopResponse represents the structure of each shop object in the array
-type ShopResponse struct {
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	ShopID    string `json:"shopid"`
-	ShopName  string `json:"shopname"`
-}
 
 // HandleShopsRequest handles requests for /barber-shop-service/shops endpoint
 func HandleShopsRequest(w http.ResponseWriter, r *http.Request) {
@@ -43,17 +35,12 @@ func HandleShopsRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Decode the JSON array response from the backend service
-	var responseData []ShopResponse
-	if err := json.NewDecoder(resp.Body).Decode(&responseData); err != nil {
-		log.Printf("Failed to decode response body: %v", err)
+	// Copy the response from the backend to the client
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	if _, err := io.Copy(w, resp.Body); err != nil {
+		log.Printf("Failed to copy response body: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	// Return JSON response to client
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(responseData)
-
 }
