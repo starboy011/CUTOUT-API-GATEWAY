@@ -19,9 +19,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	router := mux.NewRouter()
-
 	server.SetupBarberShopsServiceRoutes(router)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
